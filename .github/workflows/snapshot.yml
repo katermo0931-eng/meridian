@@ -1,0 +1,63 @@
+name: Publish static snapshot
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project-tracker
+        uses: actions/checkout@v4
+        with:
+          path: project-tracker
+
+      - name: Checkout Interactive-CV
+        uses: actions/checkout@v4
+        with:
+          repository: katermo0931-eng/Interactive-CV
+          path: Interactive-CV
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: project-tracker/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: project-tracker
+
+      - name: Build static snapshot
+        # GITHUB_WORKSPACE is the runner root; both repos are checked out as
+        # subdirs here, so scanProjects finds project-tracker/ and Interactive-CV/
+        run: PROJECTS_ROOT=$GITHUB_WORKSPACE node scripts/build-static.js
+        working-directory: project-tracker
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: project-tracker/output
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

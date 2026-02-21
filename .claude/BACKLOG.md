@@ -1,7 +1,7 @@
 # Project Tracker — Backlog
 
 ## Current
-Phase 4 complete — dashboard, GitHub integration, commit links
+Phase 5: Static deploy — GitHub Actions → GitHub Pages auto-publish
 
 ---
 
@@ -40,3 +40,12 @@ Phase 4 complete — dashboard, GitHub integration, commit links
 - [x] Clickable commit hashes — link to GitHub commit URL when remote is detected
 - [x] ghCache cleared on full reload — no stale GitHub stats after manual refresh
 - [x] Export MD includes GitHub repo URL per project
+
+---
+
+# PHASE 5 — Static Deploy & CI
+- [x] build-static.js — self-contained output/index.html with fetch shim (GitHub API disabled in static mode)
+- [x] npm run export / export:push — local snapshot workflow
+- [x] vercel.json — outputDirectory: output (Vercel-ready)
+- [ ] GitHub Actions workflow — checkout all tracked repos, build snapshot, deploy to GitHub Pages on every push to main
+- [ ] Enable GitHub Pages on repo (Settings → Pages → GitHub Actions source)
