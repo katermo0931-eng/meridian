@@ -1,0 +1,257 @@
+/* ── Reset & Base ─────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+  background: #0f172a;   /* slate-900 */
+  color: #cbd5e1;         /* slate-300 */
+}
+
+/* ── Header ───────────────────────────────────────── */
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 24px;
+  background: #1e293b;   /* slate-800 */
+  border-bottom: 1px solid #334155;  /* slate-700 */
+}
+
+h1 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  color: #f1f5f9;         /* slate-100 */
+}
+
+.meta {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #475569;         /* slate-600 */
+  line-height: 1.4;
+}
+
+/* ── Controls ─────────────────────────────────────── */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.controls input,
+.controls select,
+.controls button {
+  font-size: 13px;
+  font-family: inherit;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  background: #0f172a;
+  color: #cbd5e1;
+}
+
+.controls input { width: 240px; }
+.controls input::placeholder { color: #475569; }
+
+.controls select option { background: #1e293b; }
+
+.controls button {
+  background: #1e3a5f;
+  color: #93c5fd;
+  border-color: #2563eb;
+  cursor: pointer;
+  font-weight: 600;
+}
+.controls button:hover { background: #1d4ed8; color: #fff; }
+
+/* ── Main / Table ─────────────────────────────────── */
+main { padding: 16px 24px; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  overflow: hidden;
+  table-layout: fixed;
+}
+
+th, td {
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid #1e293b;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
+
+th {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: #475569;
+  background: #0f172a;
+  border-bottom: 1px solid #334155;
+}
+
+tr:last-child td { border-bottom: none; }
+
+/* ── Project cell ─────────────────────────────────── */
+.proj .title  { font-weight: 600; color: #f1f5f9; }
+.proj .folder { font-size: 12px; color: #475569; margin-top: 3px; }
+
+/* ── Status badges ────────────────────────────────── */
+.badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  border: 1px solid transparent;
+}
+.badge.ok      { background: rgba(74,222,128,.1);  color: #4ade80; border-color: rgba(74,222,128,.25); }
+.badge.warn    { background: rgba(251,191,36,.1);  color: #fbbf24; border-color: rgba(251,191,36,.25); }
+.badge.blocked { background: rgba(248,113,113,.1); color: #f87171; border-color: rgba(248,113,113,.25); }
+
+/* ── Numbers ──────────────────────────────────────── */
+td.num { color: #94a3b8; }
+
+/* ── Progress bar ─────────────────────────────────── */
+.prog-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.prog-bar {
+  flex: 1;
+  height: 5px;
+  background: #334155;
+  border-radius: 999px;
+  overflow: hidden;
+  min-width: 48px;
+}
+.prog-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  transition: width .4s ease;
+}
+.prog-pct { font-size: 12px; color: #60a5fa; white-space: nowrap; font-weight: 600; }
+
+/* ── Description / current task ──────────────────── */
+.desc { color: #94a3b8; }
+.current-task { color: #cbd5e1; }
+
+.missing {
+  margin-top: 6px;
+  color: #fbbf24;
+  background: rgba(251,191,36,.07);
+  border: 1px dashed rgba(251,191,36,.3);
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+/* ── Row expand ───────────────────────────────────── */
+.proj-row { cursor: pointer; transition: background .15s; }
+.proj-row:hover td { background: rgba(96,165,250,.05); }
+.expand-icon { color: #475569; margin-right: 4px; }
+
+/* ── Epic detail panel ────────────────────────────── */
+.epic-detail td {
+  background: #0f172a;
+  padding: 16px 20px !important;
+  border-bottom: 1px solid #334155;
+}
+
+.epic-list { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.epic {
+  flex: 1;
+  min-width: 200px;
+  background: #1e293b;
+  border-radius: 10px;
+  border: 1px solid #334155;
+  overflow: hidden;
+}
+.epic.status-ok      { border-left: 3px solid #4ade80; }
+.epic.status-warn    { border-left: 3px solid #fbbf24; }
+.epic.status-blocked { border-left: 3px solid #f87171; }
+
+.epic-hdr {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  user-select: none;
+  background: #0f172a;
+  border-bottom: 1px solid #334155;
+}
+.epic-hdr:hover { background: rgba(96,165,250,.06); }
+
+.epic-fold  { color: #475569; flex-shrink: 0; }
+.epic-title { font-weight: 600; color: #e2e8f0; flex: 1; }
+
+.epic-tasks { padding: 8px 12px; }
+
+.task         { padding: 2px 0; line-height: 1.5; }
+.task.done    { color: #4ade80; }
+.task.pending { color: #fbbf24; }
+.task.blocked { color: #f87171; font-weight: 600; }
+
+/* ── Recent commits ───────────────────────────────── */
+.commits-section {
+  margin-top: 16px;
+  border-top: 1px solid #334155;
+  padding-top: 12px;
+}
+
+.commits-title {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: #475569;
+  margin-bottom: 8px;
+}
+
+.commit {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(51,65,85,.5);
+  line-height: 1.4;
+}
+.commit:last-child { border-bottom: none; }
+
+.commit-hash {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  color: #3b82f6;
+  flex-shrink: 0;
+  letter-spacing: .04em;
+}
+
+.commit-date {
+  font-size: 12px;
+  color: #475569;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.commit-subject {
+  font-size: 13px;
+  color: #cbd5e1;
+  flex: 1;
+  overflow-wrap: anywhere;
+}

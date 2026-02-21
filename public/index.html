@@ -1,0 +1,47 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Project Tracker</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>Project Tracker</h1>
+      <div class="meta" id="meta"></div>
+    </div>
+
+    <div class="controls">
+      <input id="q" placeholder="Search by name / description…" />
+      <select id="status">
+        <option value="all">All</option>
+        <option value="blocked">Blocked</option>
+        <option value="needs work">Needs work</option>
+        <option value="ready">Ready</option>
+      </select>
+      <button id="refresh">Refresh</button>
+    </div>
+  </header>
+
+  <main>
+    <table>
+      <thead>
+        <tr>
+          <th>Project</th>
+          <th>Status</th>
+          <th>Done</th>
+          <th>Left</th>
+          <th>Progress</th>
+          <th>Current Task</th>
+          <th>Description / Missing</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
