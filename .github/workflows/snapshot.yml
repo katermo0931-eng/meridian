@@ -33,16 +33,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
-          cache-dependency-path: project-tracker/package-lock.json
-
-      - name: Install dependencies
-        run: npm ci
-        working-directory: project-tracker
 
       - name: Build static snapshot
-        # GITHUB_WORKSPACE is the runner root; both repos are checked out as
-        # subdirs here, so scanProjects finds project-tracker/ and Interactive-CV/
+        # build-static.js uses only Node built-ins — no npm install needed
+        # GITHUB_WORKSPACE root has both repos as siblings: project-tracker/ and Interactive-CV/
         run: PROJECTS_ROOT=$GITHUB_WORKSPACE node scripts/build-static.js
         working-directory: project-tracker
 
