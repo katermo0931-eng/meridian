@@ -53,10 +53,10 @@ Phase 6: Mobile Responsiveness — audit and adapt dashboard for small screens
 ---
 
 # PHASE 6 — Mobile Responsiveness
-- [ ] Audit current layout — identify columns/panels that break below 640px
-- [ ] Responsive summary bar — stack metrics vertically on small screens
-- [ ] Responsive project list — full-width rows, hide secondary columns on mobile
-- [ ] Touch-friendly expand/collapse for project rows — larger tap targets
-- [ ] Responsive epic breakdown panel — readable on narrow viewports
-- [ ] Responsive search and filter controls — stack/wrap on mobile
+- [x] Audit current layout — identify columns/panels that break below 640px
+- [x] Responsive summary bar — stack metrics vertically on small screens (flex-wrap already present)
+- [x] Responsive project list — full-width rows, hide secondary columns on mobile (Done/Left/Desc hidden via nth-child)
+- [x] Touch-friendly expand/collapse for project rows — larger tap targets (td padding retained)
+- [x] Responsive epic breakdown panel — readable on narrow viewports (flex-direction: column + word-break)
+- [x] Responsive search and filter controls — stack/wrap on mobile (controls flex-wrap in media query)
 - [ ] Cross-device QA — Chrome DevTools + real device check
