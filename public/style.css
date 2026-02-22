@@ -175,6 +175,7 @@ tr:last-child td { border-bottom: none; }
   font-weight: 600;
   letter-spacing: .02em;
   border: 1px solid transparent;
+  white-space: nowrap;
 }
 .badge.ok       { background: rgba(74,222,128,.1);  color: #4ade80; border-color: rgba(74,222,128,.25); }
 .badge.warn     { background: rgba(251,191,36,.1);  color: #fbbf24; border-color: rgba(251,191,36,.25); }
@@ -282,7 +283,7 @@ td.num { color: #94a3b8; }
 
 .epic-tasks { padding: 8px 12px; }
 
-.task         { padding: 2px 0; line-height: 1.5; }
+.task         { padding: 2px 0; line-height: 1.5; overflow-wrap: break-word; word-break: break-word; }
 .task.done    { color: #4ade80; }
 .task.pending { color: #fbbf24; }
 .task.blocked { color: #f87171; font-weight: 600; }
@@ -474,4 +475,9 @@ a.commit-hash:hover { text-decoration: underline; color: #60a5fa; }
   .epic-list { flex-direction: column; }
 
   .epic { min-width: 0; }
+
+  /* Hide Done, Left, Description columns — keep Project, Status, Progress, Current Task */
+  th:nth-child(3), td:nth-child(3),
+  th:nth-child(4), td:nth-child(4),
+  th:nth-child(7), td:nth-child(7) { display: none; }
 }
