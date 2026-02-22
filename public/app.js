@@ -57,14 +57,15 @@
     var elDash = document.getElementById("dashboard");
     if (!elDash) return;
     var total = projects.length;
-    var blocked = 0, needsWork = 0, ready = 0;
+    var blocked = 0, needsWork = 0, inProgress = 0, complete = 0;
     var totalDone = 0, totalLeft = 0;
     var allCommits = [];
 
     projects.forEach(function (p) {
-      if      (p.status === "blocked")    blocked++;
-      else if (p.status === "needs work") needsWork++;
-      else if (p.status === "ready")      ready++;
+      if      (p.status === "blocked")     blocked++;
+      else if (p.status === "needs work")  needsWork++;
+      else if (p.status === "in progress") inProgress++;
+      else if (p.status === "complete")    complete++;
       if (p.metrics) { totalDone += p.metrics.done || 0; totalLeft += p.metrics.left || 0; }
       var c = p.recent_commits && p.recent_commits[0];
       if (c) allCommits.push({ project: p.title, hash: c.hash, date: c.date, subject: c.subject });
@@ -92,9 +93,10 @@
         "</div>" +
         "<div class=\"dash-card\">" +
           "<div class=\"dash-status-row\">" +
-            "<span class=\"badge blocked\">" + blocked + " blocked</span>" +
-            "<span class=\"badge warn\">"    + needsWork + " needs work</span>" +
-            "<span class=\"badge ok\">"      + ready     + " ready</span>" +
+            "<span class=\"badge blocked\">" + blocked    + " blocked</span>" +
+            "<span class=\"badge warn\">"    + needsWork  + " needs work</span>" +
+            "<span class=\"badge info\">"    + inProgress + " in progress</span>" +
+            "<span class=\"badge ok\">"      + complete   + " complete</span>" +
           "</div>" +
           "<div class=\"dash-lbl\">By status</div>" +
         "</div>" +
@@ -252,7 +254,7 @@
             "</div>" +
             "<div class=\"folder\">" + esc(p.folder) + "</div>" +
           "</td>" +
-          "<td><span class=\"badge " + (p.status === "ready" ? "ok" : p.status === "blocked" ? "blocked" : "warn") + "\">" + esc(p.status) + "</span></td>" +
+          "<td><span class=\"badge " + (p.status === "complete" ? "ok" : p.status === "blocked" ? "blocked" : p.status === "in progress" ? "info" : "warn") + "\">" + esc(p.status) + "</span></td>" +
           "<td class=\"num\">" + done + "</td>" +
           "<td class=\"num\">" + left + "</td>" +
           "<td>" + progHtml + "</td>" +
@@ -324,7 +326,7 @@
 
   var elExport = document.getElementById("export");
 
-  var STATUS_ICON = { ready: "✓", blocked: "✗", "needs work": "~" };
+  var STATUS_ICON = { complete: "✓", blocked: "✗", "needs work": "~", "in progress": "→" };
   var TASK_ICON_MD = { done: "✓", blocked: "✗", pending: "○" };
 
   function exportMarkdown() {

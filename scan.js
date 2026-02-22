@@ -125,7 +125,11 @@ export async function scanProjects(root) {
     }
 
     const hasBlockers = epics.some((ep) => ep.tasks.some((t) => t.status === "blocked"));
-    const status = hasBlockers ? "blocked" : missing.length === 0 ? "ready" : "needs work";
+    const hasOpenTasks = metrics ? metrics.left > 0 : false;
+    const status = hasBlockers      ? "blocked"
+                 : missing.length > 0 ? "needs work"
+                 : hasOpenTasks       ? "in progress"
+                 : "complete";
 
     const recent_commits = await getGitLog(dir);
     const github_repo = await getGitHubRepo(dir);
@@ -145,7 +149,7 @@ export async function scanProjects(root) {
     });
   }
 
-  const priority = { blocked: 0, "needs work": 1, ready: 2 };
+  const priority = { blocked: 0, "needs work": 1, "in progress": 2, complete: 3 };
   results.sort((a, b) => {
     const prA = priority[a.status] ?? 1;
     const prB = priority[b.status] ?? 1;

@@ -1,7 +1,7 @@
 # Project Tracker — Backlog
 
 ## Current
-Phase 5: Static deploy — GitHub Actions → GitHub Pages auto-publish
+Phase 6: Mobile Responsiveness — audit and adapt dashboard for small screens
 
 ---
 
@@ -49,3 +49,14 @@ Phase 5: Static deploy — GitHub Actions → GitHub Pages auto-publish
 - [x] vercel.json — outputDirectory: output (Vercel-ready)
 - [ ] GitHub Actions workflow — checkout all tracked repos, build snapshot, deploy to GitHub Pages on every push to main
 - [ ] Enable GitHub Pages on repo (Settings → Pages → GitHub Actions source)
+
+---
+
+# PHASE 6 — Mobile Responsiveness
+- [ ] Audit current layout — identify columns/panels that break below 640px
+- [ ] Responsive summary bar — stack metrics vertically on small screens
+- [ ] Responsive project list — full-width rows, hide secondary columns on mobile
+- [ ] Touch-friendly expand/collapse for project rows — larger tap targets
+- [ ] Responsive epic breakdown panel — readable on narrow viewports
+- [ ] Responsive search and filter controls — stack/wrap on mobile
+- [ ] Cross-device QA — Chrome DevTools + real device check
