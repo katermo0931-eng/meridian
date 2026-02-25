@@ -242,9 +242,13 @@
       var tasksId = "etasks-" + rowIdx + "-" + ei;
       var tasks = ep.tasks.map(function (t) {
         var st = t.status || "pending";
-        var estHtml   = t.estimate ? "<span class=\"comp-est\">"    + esc(t.estimate) + "</span>" : "";
-        var actHtml   = t.actual   ? "<span class=\"comp-actual\">→ " + esc(t.actual)   + "</span>" : "";
-        var chipsHtml = (estHtml || actHtml) ? "<span class=\"comp-chips\">" + estHtml + actHtml + "</span>" : "";
+        var estHtml     = t.estimate ? "<span class=\"comp-est\">"    + esc(t.estimate) + "</span>" : "";
+        var actHtml     = t.actual   ? "<span class=\"comp-actual\">→ " + esc(t.actual)   + "</span>" : "";
+        var elapsedHtml = (t.status === "done" && t.elapsed_hours != null)
+          ? "<span class=\"comp-elapsed\" title=\"" + esc(t.started_at || "") + " → " + esc(t.completed_at || "") + "\">" +
+            (t.elapsed_hours < 1 ? "&lt;1h" : t.elapsed_hours + "h") + "</span>"
+          : "";
+        var chipsHtml = (estHtml || actHtml || elapsedHtml) ? "<span class=\"comp-chips\">" + estHtml + actHtml + elapsedHtml + "</span>" : "";
         return "<div class=\"task " + st + "\">" +
           (TASK_ICON[st] || "○") + " " + esc(t.text) + chipsHtml +
         "</div>";
