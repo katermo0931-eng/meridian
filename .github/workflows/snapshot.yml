@@ -22,12 +22,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: project-tracker
+          fetch-depth: 0
 
       - name: Checkout Interactive-CV
         uses: actions/checkout@v4
         with:
           repository: katermo0931-eng/Interactive-CV
           path: Interactive-CV
+          fetch-depth: 0
 
       - name: Checkout Talkfolio
         uses: actions/checkout@v4
@@ -35,6 +37,7 @@ jobs:
           repository: katermo0931-eng/talkfolio
           path: talkfolio
           token: ${{ secrets.GH_PAT }}
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
