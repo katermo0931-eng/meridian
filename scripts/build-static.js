@@ -11,7 +11,7 @@
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
-import { scanProjects } from "../scan.js";
+import { scanProjects, scanExtraDirs } from "../scan.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -19,12 +19,20 @@ const ROOT = path.resolve(__dirname, "..");
 const PROJECTS_ROOT =
   process.env.PROJECTS_ROOT || path.resolve(ROOT, "..");
 
+const EXTRA_PROJECTS = process.env.EXTRA_PROJECTS
+  ? process.env.EXTRA_PROJECTS.split(";").map(p => p.trim()).filter(Boolean)
+  : [];
+
 const OUTPUT_DIR = path.join(ROOT, "output");
 
 // ── Scan ─────────────────────────────────────────────
 
 console.log(`Scanning ${PROJECTS_ROOT} …`);
-const projects = await scanProjects(PROJECTS_ROOT);
+const [rootProjects, extraProjects] = await Promise.all([
+  scanProjects(PROJECTS_ROOT),
+  EXTRA_PROJECTS.length ? scanExtraDirs(EXTRA_PROJECTS) : []
+]);
+const projects = [...rootProjects, ...extraProjects];
 const scanned_at = new Date().toISOString();
 console.log(`  Found ${projects.length} project(s)`);
 
