@@ -3,7 +3,7 @@ import path from "path";
 import os from "os";
 import { readFile } from "fs/promises";
 import { fileURLToPath } from "url";
-import { scanProjects } from "./scan.js";
+import { scanProjects, scanExtraDirs } from "./scan.js";
 
 const app = express();
 const PORT = process.env.PORT || 4319;
@@ -12,6 +12,11 @@ const PORT = process.env.PORT || 4319;
 const PROJECTS_ROOT =
   process.env.PROJECTS_ROOT ||
   path.resolve(process.cwd(), "..");
+
+// Extra individual project directories (semicolon-separated absolute paths)
+const EXTRA_PROJECTS = process.env.EXTRA_PROJECTS
+  ? process.env.EXTRA_PROJECTS.split(";").map(p => p.trim()).filter(Boolean)
+  : [];
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -23,11 +28,15 @@ app.get("/api/projects", async (req, res) => {
     const root = req.query.root
       ? path.resolve(req.query.root)
       : PROJECTS_ROOT;
-    const projects = await scanProjects(root);
+    const [projects, extras] = await Promise.all([
+      scanProjects(root),
+      EXTRA_PROJECTS.length ? scanExtraDirs(EXTRA_PROJECTS) : []
+    ]);
+    const allProjects = [...projects, ...extras];
     res.json({
       root,
       scanned_at: new Date().toISOString(),
-      projects
+      projects: allProjects
     });
   } catch (e) {
     res.status(500).json({ error: String(e) });

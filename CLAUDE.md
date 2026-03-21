@@ -21,7 +21,7 @@ breakdowns. Runs at http://localhost:4319. Live at https://katermo0931-eng.githu
 
 ## Restart requirements
 - CSS/JS/HTML changes (`public/`): browser refresh only
-- Any server-side change (`server.js`, `scan.js`, `parseBacklog.js`, `parseReadme.js`): `npx kill-port 4319 && node /c/Users/Hola/project-tracker/server.js &`
+- Any server-side change (`server.js`, `scan.js`, `parseBacklog.js`, `parseReadme.js`): `npx kill-port 4319 && node --env-file=.env /c/Users/Hola/project-tracker/server.js &`
 
 ## Design system
 Matches Interactive CV palette: slate-900/800/700 background, blue-400 accent, 13px base font.

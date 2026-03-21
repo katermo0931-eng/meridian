@@ -81,74 +81,71 @@ function pickFrameworkFiles(projectDir) {
   return { candidates, readme };
 }
 
-export async function scanProjects(root) {
-  const dirs = await getTopLevelDirs(root);
+async function scanOneDir(dir) {
+  const name = path.basename(dir);
 
-  const results = [];
-  for (const dir of dirs) {
-    const name = path.basename(dir);
+  const { candidates, readme } = pickFrameworkFiles(dir);
+  const backlogPath = candidates.find((c) => c.kind === "backlog")?.p;
+  const snapshotPath = candidates.find((c) => c.kind === "snapshot")?.p;
 
-    const { candidates, readme } = pickFrameworkFiles(dir);
-    const backlogPath = candidates.find((c) => c.kind === "backlog")?.p;
-    const snapshotPath = candidates.find((c) => c.kind === "snapshot")?.p;
+  const hasBacklog = backlogPath ? await exists(backlogPath) : false;
+  const hasSnapshot = snapshotPath ? await exists(snapshotPath) : false;
+  const hasReadme = await exists(readme);
 
-    const hasBacklog = backlogPath ? await exists(backlogPath) : false;
-    const hasSnapshot = snapshotPath ? await exists(snapshotPath) : false;
-    const hasReadme = await exists(readme);
+  const isProject = hasBacklog || hasSnapshot || hasReadme;
+  if (!isProject) return null;
 
-    const isProject = hasBacklog || hasSnapshot || hasReadme;
-    if (!isProject) continue;
+  const missing = [];
+  if (!hasBacklog) missing.push(".claude/BACKLOG.md (or content/BACKLOG.md)");
+  if (!hasSnapshot) missing.push(".claude/SNAPSHOT.md (or content/SNAPSHOT.md)");
+  if (!hasReadme) missing.push("README.md");
 
-    const missing = [];
-    if (!hasBacklog) missing.push(".claude/BACKLOG.md (or content/BACKLOG.md)");
-    if (!hasSnapshot) missing.push(".claude/SNAPSHOT.md (or content/SNAPSHOT.md)");
-    if (!hasReadme) missing.push("README.md");
-
-    let metrics = null;
-    let current_task = "";
-    let epics = [];
-    if (hasBacklog) {
-      const txt = await readText(backlogPath);
-      const parsed = parseBacklog(txt);
-      metrics = parsed.metrics;
-      current_task = parsed.current_task;
-      epics = parseEpics(txt);
-    }
-
-    let title = name;
-    let description = "";
-    if (hasReadme) {
-      const txt = await readText(readme);
-      const parsed = parseReadme(txt);
-      title = parsed.title || title;
-      description = parsed.description || "";
-    }
-
-    const hasBlockers = epics.some((ep) => ep.tasks.some((t) => t.status === "blocked"));
-    const hasOpenTasks = metrics ? metrics.left > 0 : false;
-    const status = hasBlockers      ? "blocked"
-                 : missing.length > 0 ? "needs work"
-                 : hasOpenTasks       ? "in progress"
-                 : "complete";
-
-    const recent_commits = await getGitLog(dir);
-    const github_repo = await getGitHubRepo(dir);
-
-    results.push({
-      id: name,
-      folder: dir,
-      status,
-      metrics,
-      current_task,
-      title,
-      description,
-      missing_files: missing,
-      epics,
-      recent_commits,
-      github_repo
-    });
+  let metrics = null;
+  let current_task = "";
+  let epics = [];
+  if (hasBacklog) {
+    const txt = await readText(backlogPath);
+    const parsed = parseBacklog(txt);
+    metrics = parsed.metrics;
+    current_task = parsed.current_task;
+    epics = parseEpics(txt);
   }
 
+  let title = name;
+  let description = "";
+  if (hasReadme) {
+    const txt = await readText(readme);
+    const parsed = parseReadme(txt);
+    title = parsed.title || title;
+    description = parsed.description || "";
+  }
+
+  const hasBlockers = epics.some((ep) => ep.tasks.some((t) => t.status === "blocked"));
+  const hasOpenTasks = metrics ? metrics.left > 0 : false;
+  const status = hasBlockers        ? "blocked"
+               : missing.length > 0 ? "needs work"
+               : hasOpenTasks       ? "in progress"
+               : "complete";
+
+  const recent_commits = await getGitLog(dir);
+  const github_repo = await getGitHubRepo(dir);
+
+  return {
+    id: name,
+    folder: dir,
+    status,
+    metrics,
+    current_task,
+    title,
+    description,
+    missing_files: missing,
+    epics,
+    recent_commits,
+    github_repo
+  };
+}
+
+function sortResults(results) {
   const priority = { blocked: 0, "needs work": 1, "in progress": 2, complete: 3 };
   results.sort((a, b) => {
     const prA = priority[a.status] ?? 1;
@@ -156,6 +153,36 @@ export async function scanProjects(root) {
     if (prA !== prB) return prA - prB;
     return a.title.localeCompare(b.title);
   });
-
   return results;
+}
+
+export async function scanProjects(root) {
+  const dirs = await getTopLevelDirs(root);
+  const results = (await Promise.all(dirs.map(scanOneDir))).filter(Boolean);
+  return sortResults(results);
+}
+
+export async function scanExtraDirs(dirs) {
+  const results = await Promise.all(dirs.map(async (dir) => {
+    const result = await scanOneDir(dir);
+    if (result) return result;
+    // Explicitly listed dirs are always included even without marker files
+    const name = path.basename(dir);
+    const recent_commits = await getGitLog(dir);
+    const github_repo = await getGitHubRepo(dir);
+    return {
+      id: name,
+      folder: dir,
+      status: "needs work",
+      metrics: null,
+      current_task: "",
+      title: name,
+      description: "",
+      missing_files: [".claude/BACKLOG.md (or content/BACKLOG.md)", ".claude/SNAPSHOT.md (or content/SNAPSHOT.md)", "README.md"],
+      epics: [],
+      recent_commits,
+      github_repo
+    };
+  }));
+  return sortResults(results);
 }
