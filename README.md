@@ -4,8 +4,11 @@ Cross-project dev dashboard — live progress from BACKLOG.md checkboxes, GitHub
 
 **Live:** https://katermo0931-eng.github.io/meridian/
 
+Meridian is expanding to include **ZPI**, an intelligence layer that adds project health scoring, lifecycle detection, and smart prioritization.
+
 ## What it does
 
+### Meridian Core (Layer 0-1: Sensing & Structure)
 - Scans a directory of projects and reads each project's `BACKLOG.md` and `README.md`
 - Auto-computes progress from `[x]` / `[ ]` task checkboxes — no hardcoded numbers
 - Pulls live git commit history per project without manual updates
@@ -14,6 +17,15 @@ Cross-project dev dashboard — live progress from BACKLOG.md checkboxes, GitHub
 - Health summary dashboard — overall progress %, by-status breakdown, latest activity
 - Filters by project status and free-text search
 - Exports project summary to markdown
+
+### ZPI (Layer 2: Intelligence) — *In Development*
+- **Health Scoring**: Evaluates project stability and momentum (0-100)
+- **Lifecycle Detection**: Classifies projects into stages (Conception / Active / Maintenance / Sunset)
+- **Prioritization Ranking**: Ranks projects by strategic urgency and momentum
+- **Anomaly Detection**: Surfaces unusual states (stalled projects, velocity drops, etc.)
+- **Drift Compatibility**: Recognizes cross-project dependencies and integrations
+
+See [CLAUDE.md](./CLAUDE.md) and [context/product-vision.md](./context/product-vision.md) for strategic vision.
 
 ## Stack
 
@@ -36,3 +48,22 @@ Override with `PROJECTS_ROOT=/path/to/projects node server.js`.
 Each tracked project should have:
 - `README.md` — title (first `#` heading) and description (first paragraph)
 - `.claude/BACKLOG.md` — phases with `- [x]` / `- [ ]` task items
+
+## Documentation
+
+### Quick Start
+- [CLAUDE.md](./CLAUDE.md) — project conventions and workflow
+- [context/product-vision.md](./context/product-vision.md) — strategic direction
+
+### Architecture
+- [context/architecture.md](./context/architecture.md) — 3-layer system design
+- [context/terminology.md](./context/terminology.md) — shared vocabulary
+
+### Specs
+- [specs/zpi-overview.md](./specs/zpi-overview.md) — ZPI features and requirements
+- [specs/scoring-model.md](./specs/scoring-model.md) — health scoring algorithms
+- [specs/drift-integration.md](./specs/drift-integration.md) — Drift compatibility patterns
+
+### Backlog
+- [backlog/MASTER-BACKLOG.md](./backlog/MASTER-BACKLOG.md) — all planned phases
+- [backlog/SPRINT-0.md](./backlog/SPRINT-0.md) — current sprint (product definition)

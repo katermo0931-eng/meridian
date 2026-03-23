@@ -1,9 +1,14 @@
 # Meridian — Claude Instructions
 
 ## What this is
-A standalone local web dashboard (Node/Express, vanilla JS) that scans sibling project repos
-and displays progress metrics, GitHub PR/issue badges, git history, health summary, and phase
-breakdowns. Runs at http://localhost:4319. Live at https://katermo0931-eng.github.io/meridian/
+
+**Meridian** is a cross-project development dashboard building out into the **ZPI** intelligence layer.
+
+- **Core (Meridian)**: Scans projects, reads BACKLOG.md + README.md, auto-computes progress from checkboxes, pulls git history and GitHub stats, displays health summary and phase breakdowns
+- **Layer 2 (ZPI)**: Add intelligence on top — project health scoring, momentum detection, lifecycle stage, prioritization guidance, and Drift compatibility
+- **Repository**: All in same repo (do NOT create separate repo)
+- **Live**: https://katermo0931-eng.github.io/meridian/
+- **Local**: http://localhost:4319
 
 ## Architecture
 - `server.js` — Express server, routes, static serving
@@ -26,6 +31,33 @@ breakdowns. Runs at http://localhost:4319. Live at https://katermo0931-eng.githu
 ## Design system
 Matches Interactive CV palette: slate-900/800/700 background, blue-400 accent, 13px base font.
 
+## ZPI — Next Layer (Planning)
+
+**3-Layer Architecture**:
+```
+Layer 2: Intelligence     ← ZPI (in progress) — health scoring, momentum, lifecycle, prioritization
+Layer 1: Structure        ← project metadata, phases, metrics aggregation
+Layer 0: Sensing          ← Meridian today — filesystem scan, git log, GitHub API
+```
+
+**ZPI Components** (under design):
+- Project health evaluation (velocity, stability, momentum)
+- Lifecycle stage detection (conception → active → maintenance → sunset)
+- Prioritization scoring (urgency, momentum, complexity, dependencies)
+- Drift compatibility layer for cross-project structures
+- Scoring model integrations back into Meridian UI
+
+**Key Context Files**:
+- `context/product-vision.md` — strategic direction
+- `context/architecture.md` — system design
+- `context/terminology.md` — shared terms
+- `specs/zpi-overview.md` — feature scope
+- `specs/drift-integration.md` — Drift patterns
+- `specs/scoring-model.md` — scoring algorithms
+
+## Design system
+Matches Interactive CV palette: slate-900/800/700 background, blue-400 accent, 13px base font.
+
 ## Deploy rule
 After completing any implementation task: verify it works locally first, then commit the relevant files and push to main. Never push untested changes. When changes also affect Interactive CV, push that repo too — pushing Interactive CV to main triggers immediate Vercel live deploy.
 
@@ -39,3 +71,5 @@ After completing any implementation task: verify it works locally first, then co
 - Don't add a build system or bundler — keep it vanilla
 - Don't hardcode progress numbers anywhere
 - Don't add a database — file-based scanning is intentional
+- **Don't create a separate repo for ZPI** — keep it all in Meridian project
+- **Don't inherit from AccessMap** — ZPI is native to Meridian
