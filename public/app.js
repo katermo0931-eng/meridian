@@ -16,11 +16,14 @@
 
   // ── Tab switching ──────────────────────────────────
 
+  var unstructuredVisible = false;
+
   function switchTab(tab) {
     elTabProjects.classList.toggle("active", tab === "projects");
     elTabIdeas.classList.toggle("active", tab === "ideas");
     elMain.style.display = tab === "projects" ? "" : "none";
     if (elDashboard) elDashboard.style.display = tab === "projects" ? "" : "none";
+    if (elUnstructuredPanel) elUnstructuredPanel.style.display = (tab === "projects" && unstructuredVisible) ? "" : "none";
     elIdeasPanel.style.display = tab === "ideas" ? "" : "none";
     if (tab === "ideas") renderIdeasPanel();
   }
@@ -32,7 +35,63 @@
 
   var ideasData = null;
 
-  function fetchIdeas() {
+  // ── Unstructured projects ──────────────────────────────────────────────────
+
+  var elUnstructuredPanel = document.getElementById("unstructured-panel");
+  var elUnstructuredRows  = document.getElementById("unstructured-rows");
+  var elUnstructuredCount = document.getElementById("unstructured-count");
+
+  var FRESHNESS_LABEL = { active: "active", idle: "idle", stale: "stale" };
+  var FRESHNESS_CLASS = { active: "fresh-active", idle: "fresh-idle", stale: "fresh-stale" };
+
+  function relativeDate(ms) {
+    var ageDays = (Date.now() - ms) / (1000 * 60 * 60 * 24);
+    if (ageDays < 1)   return "today";
+    if (ageDays < 2)   return "yesterday";
+    if (ageDays < 30)  return Math.floor(ageDays) + "d ago";
+    if (ageDays < 365) return Math.floor(ageDays / 30) + "mo ago";
+    return Math.floor(ageDays / 365) + "y ago";
+  }
+
+  function renderUnstructured(projects) {
+    if (!projects || !projects.length) {
+      unstructuredVisible = false;
+      if (elUnstructuredPanel) elUnstructuredPanel.style.display = "none";
+      return;
+    }
+    unstructuredVisible = true;
+    if (elUnstructuredCount) elUnstructuredCount.textContent = projects.length;
+    if (elUnstructuredPanel) elUnstructuredPanel.style.display = "";
+
+    elUnstructuredRows.innerHTML = projects.map(function (p) {
+      var signals = [];
+      if (p.hasGit)         signals.push("<span class=\"sig sig-git\">git</span>");
+      if (p.hasReadme)      signals.push("<span class=\"sig sig-readme\">readme</span>");
+      if (p.hasPackageJson) signals.push("<span class=\"sig sig-pkg\">pkg</span>");
+      var sigHtml = signals.join(" ") || "<span class=\"sig-none\">—</span>";
+      var freshCls = FRESHNESS_CLASS[p.freshnessState] || "fresh-stale";
+      var freshLabel = FRESHNESS_LABEL[p.freshnessState] || p.freshnessState;
+      return "<tr>" +
+        "<td class=\"proj\"><div class=\"title\">" + esc(p.name) + "</div>" +
+        "<div class=\"folder\">" + esc(p.path) + "</div></td>" +
+        "<td>" + sigHtml + "</td>" +
+        "<td class=\"unstructured-date\">" + esc(relativeDate(p.lastModifiedAt)) + "</td>" +
+        "<td><span class=\"freshness-badge " + freshCls + "\">" + freshLabel + "</span></td>" +
+        "</tr>";
+    }).join("");
+  }
+
+  function fetchUnstructured() {
+    var url = "/api/unstructured" + (customRoot ? "?root=" + encodeURIComponent(customRoot) : "");
+    fetch(url)
+      .then(function (r) { return r.json(); })
+      .then(function (j) { renderUnstructured(j.projects || []); })
+      .catch(function () {
+        if (elUnstructuredPanel) elUnstructuredPanel.style.display = "none";
+      });
+  }
+
+
     fetch("/api/ideas")
       .then(function (r) { return r.json(); })
       .then(function (data) {
@@ -421,6 +480,7 @@
           " | Projects: " + all.length +
           " | Last scan: " + scanned.toLocaleString();
         render();
+        fetchUnstructured();
         startCountdown();
       })
       .catch(function (e) {

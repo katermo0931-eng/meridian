@@ -3,7 +3,7 @@ import path from "path";
 import os from "os";
 import { readFile } from "fs/promises";
 import { fileURLToPath } from "url";
-import { scanProjects, scanExtraDirs } from "./scan.js";
+import { scanProjects, scanExtraDirs, scanUnstructured } from "./scan.js";
 
 const app = express();
 const PORT = process.env.PORT || 4319;
@@ -79,6 +79,18 @@ app.get("/api/github-stats", async (req, res) => {
       stars: repoData.stargazers_count ?? 0,
       html_url: repoData.html_url
     });
+  } catch (e) {
+    res.status(500).json({ error: String(e) });
+  }
+});
+
+app.get("/api/unstructured", async (req, res) => {
+  try {
+    const root = req.query.root
+      ? path.resolve(req.query.root)
+      : PROJECTS_ROOT;
+    const projects = await scanUnstructured(root);
+    res.json({ root, scanned_at: new Date().toISOString(), projects });
   } catch (e) {
     res.status(500).json({ error: String(e) });
   }

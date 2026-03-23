@@ -644,3 +644,77 @@ a.commit-hash:hover { text-decoration: underline; color: #60a5fa; }
   /* Allow table to shrink below 640px on portrait */
   table { min-width: 0; }
 }
+
+/* ── Unstructured Projects section ───────────────────────────────────────── */
+
+.unstructured-panel {
+  margin: 0 0 0 0;
+  border-top: 1px solid var(--border, #2a2f3a);
+}
+
+.unstructured-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px 10px;
+}
+
+.unstructured-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted, #8892a4);
+}
+
+.unstructured-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 9px;
+  background: var(--border, #2a2f3a);
+  color: var(--muted, #8892a4);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.unstructured-table {
+  width: 100%;
+  font-size: 0.85rem;
+}
+
+.unstructured-date {
+  color: var(--muted, #8892a4);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+/* Signal chips */
+.sig {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  margin-right: 3px;
+}
+.sig-git     { background: #1d2d1d; color: #5aad5a; border: 1px solid #2d4a2d; }
+.sig-readme  { background: #1d2535; color: #5a8ec4; border: 1px solid #2a3d55; }
+.sig-pkg     { background: #2c2010; color: #c49a40; border: 1px solid #4a3a18; }
+.sig-none    { color: var(--muted, #8892a4); }
+
+/* Freshness badges */
+.freshness-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.fresh-active { background: #1a2e1a; color: #4caf50; border: 1px solid #2d4a2d; }
+.fresh-idle   { background: #2c2510; color: #ffa726; border: 1px solid #4a3d18; }
+.fresh-stale  { background: #2a1a1a; color: #888; border: 1px solid #3d2a2a; }

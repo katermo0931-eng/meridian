@@ -162,6 +162,74 @@ export async function scanProjects(root) {
   return sortResults(results);
 }
 
+// ── Unstructured project scanner ──────────────────────────────────────────
+
+const CANDIDATE_SIGNALS = [
+  ".git", "package.json", "README.md", "src", "app", "lib",
+  "tsconfig.json", "requirements.txt", "Cargo.toml", "pom.xml"
+];
+
+function freshnessState(mtimeMs) {
+  const ageDays = (Date.now() - mtimeMs) / (1000 * 60 * 60 * 24);
+  if (ageDays <= 3)  return "active";
+  if (ageDays <= 14) return "idle";
+  return "stale";
+}
+
+async function scanUnstructuredDir(dir) {
+  try {
+    const name = path.basename(dir);
+
+    // Re-use same BACKLOG detection logic as main scanner
+    const { candidates } = pickFrameworkFiles(dir);
+    const backlogPath = candidates.find((c) => c.kind === "backlog")?.p;
+    const hasBacklog = backlogPath ? await exists(backlogPath) : false;
+    if (hasBacklog) return null; // already structured — skip
+
+    // Must have at least one candidate signal to be considered a project
+    const signalChecks = await Promise.all(
+      CANDIDATE_SIGNALS.map((s) => exists(path.join(dir, s)))
+    );
+    if (!signalChecks.some(Boolean)) return null;
+
+    const hasGit        = await exists(path.join(dir, ".git"));
+    const hasReadme     = await exists(path.join(dir, "README.md"));
+    const hasPackageJson = await exists(path.join(dir, "package.json"));
+
+    // Prefer git commit timestamp; fall back to directory mtime
+    let lastModifiedAt = (await fs.stat(dir)).mtimeMs;
+    if (hasGit) {
+      try {
+        const { stdout } = await execFileAsync(
+          "git", ["log", "-1", "--format=%at"], { cwd: dir, timeout: 3000 }
+        );
+        const ts = parseInt(stdout.trim(), 10);
+        if (!isNaN(ts) && ts > 0) lastModifiedAt = ts * 1000;
+      } catch { /* git unavailable — keep mtime */ }
+    }
+
+    return {
+      name,
+      path: dir,
+      hasGit,
+      hasReadme,
+      hasPackageJson,
+      lastModifiedAt,
+      freshnessState: freshnessState(lastModifiedAt)
+    };
+  } catch (e) {
+    console.warn(`[unstructured] skipping ${dir}: ${e.message}`);
+    return null;
+  }
+}
+
+export async function scanUnstructured(root) {
+  const dirs = await getTopLevelDirs(root);
+  const results = (await Promise.all(dirs.map(scanUnstructuredDir))).filter(Boolean);
+  results.sort((a, b) => b.lastModifiedAt - a.lastModifiedAt);
+  return results;
+}
+
 export async function scanExtraDirs(dirs) {
   const results = await Promise.all(dirs.map(async (dir) => {
     const result = await scanOneDir(dir);
