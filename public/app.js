@@ -91,7 +91,7 @@
       });
   }
 
-
+  function fetchIdeas() {
     fetch("/api/ideas")
       .then(function (r) { return r.json(); })
       .then(function (data) {
