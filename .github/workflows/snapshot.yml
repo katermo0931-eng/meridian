@@ -29,6 +29,7 @@ jobs:
         with:
           repository: katermo0931-eng/Interactive-CV
           path: Interactive-CV
+          token: ${{ secrets.GH_PAT }}
           fetch-depth: 0
 
       - name: Checkout Talkfolio
@@ -36,6 +37,7 @@ jobs:
         with:
           repository: katermo0931-eng/talkfolio
           path: talkfolio
+          token: ${{ secrets.GH_PAT }}
           fetch-depth: 0
 
       - name: Checkout AccessMap
@@ -43,6 +45,7 @@ jobs:
         with:
           repository: katermo0931-eng/AccessMap
           path: AccessMap
+          token: ${{ secrets.GH_PAT }}
           fetch-depth: 0
 
       - name: Checkout GREEN
@@ -50,6 +53,7 @@ jobs:
         with:
           repository: katermo0931-eng/GREEN
           path: GREEN
+          token: ${{ secrets.GH_PAT }}
           fetch-depth: 0
 
       - name: Checkout ai-cost-audit
@@ -57,6 +61,7 @@ jobs:
         with:
           repository: katermo0931-eng/ai-cost-audit
           path: ai-cost-audit
+          token: ${{ secrets.GH_PAT }}
           fetch-depth: 0
 
       - name: Setup Node
