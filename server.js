@@ -3,7 +3,7 @@ import path from "path";
 import os from "os";
 import { readFile } from "fs/promises";
 import { fileURLToPath } from "url";
-import { scanProjects, scanExtraDirs, scanUnstructured } from "./scan.js";
+import { scanProjects, scanExtraDirs, scanUnstructured, mergeUniqueProjects } from "./scan.js";
 
 const app = express();
 const PORT = process.env.PORT || 4319;
@@ -32,7 +32,7 @@ app.get("/api/projects", async (req, res) => {
       scanProjects(root),
       EXTRA_PROJECTS.length ? scanExtraDirs(EXTRA_PROJECTS) : []
     ]);
-    const allProjects = [...projects, ...extras];
+    const allProjects = mergeUniqueProjects(projects, extras);
     res.json({
       root,
       scanned_at: new Date().toISOString(),

@@ -11,7 +11,7 @@
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
-import { scanProjects, scanExtraDirs } from "../scan.js";
+import { scanProjects, scanExtraDirs, mergeUniqueProjects } from "../scan.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -32,7 +32,7 @@ const [rootProjects, extraProjects] = await Promise.all([
   scanProjects(PROJECTS_ROOT),
   EXTRA_PROJECTS.length ? scanExtraDirs(EXTRA_PROJECTS) : []
 ]);
-const projects = [...rootProjects, ...extraProjects];
+const projects = mergeUniqueProjects(rootProjects, extraProjects);
 const scanned_at = new Date().toISOString();
 console.log(`  Found ${projects.length} project(s)`);
 

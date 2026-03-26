@@ -156,6 +156,47 @@ function sortResults(results) {
   return results;
 }
 
+function normalizeProjectKey(project) {
+  const githubRepo = project?.github_repo;
+  if (githubRepo?.owner && githubRepo?.repo) {
+    return `gh:${githubRepo.owner}/${githubRepo.repo}`.toLowerCase();
+  }
+
+  const stableId = String(project?.id || project?.name || "").trim().toLowerCase();
+  const stableTitle = String(project?.title || "").trim().toLowerCase();
+  if (stableId && stableTitle) {
+    return `id:${stableId}|title:${stableTitle}`;
+  }
+  if (stableId) {
+    return `id:${stableId}`;
+  }
+  if (stableTitle) {
+    return `title:${stableTitle}`;
+  }
+
+  const folder = project?.folder || project?.path || "";
+  if (folder) {
+    return path.resolve(folder).replace(/[\\/]+/g, "/").toLowerCase();
+  }
+  return "";
+}
+
+export function mergeUniqueProjects(...projectLists) {
+  const merged = [];
+  const seen = new Set();
+
+  for (const list of projectLists) {
+    for (const project of list || []) {
+      const key = normalizeProjectKey(project);
+      if (!key || seen.has(key)) continue;
+      seen.add(key);
+      merged.push(project);
+    }
+  }
+
+  return sortResults(merged);
+}
+
 export async function scanProjects(root) {
   const dirs = await getTopLevelDirs(root);
   const results = (await Promise.all(dirs.map(scanOneDir))).filter(Boolean);
