@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Project Tracker — Snapshot</title>
+  <title>Meridian — Snapshot</title>
   <style>
 /* ── Reset & Base ─────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
@@ -240,6 +240,7 @@ td.num { color: #94a3b8; }
 .gh-pr    { background: rgba(59,130,246,.15); color: #60a5fa; border-color: rgba(59,130,246,.3); }
 .gh-issue { background: rgba(251,191,36,.12);  color: #fbbf24; border-color: rgba(251,191,36,.3); }
 .gh-clean { background: rgba(74,222,128,.1);   color: #4ade80; border-color: rgba(74,222,128,.25); }
+.li-badge { background: rgba(10,102,194,.18);  color: #5badec; border-color: rgba(10,102,194,.4); font-weight: 700; letter-spacing: .03em; }
 
 /* ── Description / current task ──────────────────── */
 .desc { color: #94a3b8; }
@@ -448,6 +449,157 @@ a.commit-hash:hover { text-decoration: underline; color: #60a5fa; }
 .gh-pr    { background: rgba(74,222,128,.1);  color: #4ade80; border-color: rgba(74,222,128,.25); }
 .gh-issue { background: rgba(251,191,36,.1);  color: #fbbf24; border-color: rgba(251,191,36,.25); }
 .gh-clean { background: rgba(96,165,250,.1);  color: #60a5fa; border-color: rgba(96,165,250,.25); }
+.li-badge { background: rgba(10,102,194,.18); color: #5badec; border-color: rgba(10,102,194,.4); font-weight: 700; letter-spacing: .03em; }
+
+/* ── Tab bar ──────────────────────────────────────── */
+.tab-bar {
+  display: flex;
+  background: #1e293b;
+  border-bottom: 1px solid #334155;
+  padding: 0 24px;
+}
+
+.tab {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color .15s;
+}
+.tab:hover { color: #94a3b8; }
+.tab.active { color: #60a5fa; border-bottom-color: #60a5fa; }
+.tab.active:hover { color: #60a5fa; }
+
+.tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(96,165,250,.15);
+  color: #60a5fa;
+  border: 1px solid rgba(96,165,250,.3);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+}
+
+/* ── Ideas panel ──────────────────────────────────── */
+.ideas-panel {
+  padding: 20px 24px 40px;
+  max-width: 860px;
+}
+
+.ideas-h2 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #60a5fa;
+  margin: 24px 0 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #334155;
+}
+
+.ideas-h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin: 16px 0 4px;
+}
+
+.ideas-hr {
+  border: none;
+  border-top: 1px solid #1e293b;
+  margin: 6px 0;
+}
+
+.ideas-p {
+  color: #94a3b8;
+  margin: 3px 0;
+  line-height: 1.6;
+}
+
+.ideas-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0 10px;
+}
+
+.ideas-status-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: #475569;
+}
+
+.idea-badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+.idea-active { background: rgba(96,165,250,.12);  color: #60a5fa; border-color: rgba(96,165,250,.3); }
+.idea-done   { background: rgba(100,116,139,.1);  color: #64748b; border-color: rgba(100,116,139,.2); }
+.idea-other  { background: rgba(251,191,36,.1);   color: #fbbf24; border-color: rgba(251,191,36,.25); }
+
+.ideas-empty {
+  color: #475569;
+  font-style: italic;
+  margin-top: 16px;
+}
+
+.ideas-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  background: #0f172a;
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: #93c5fd;
+}
+
+/* ── Complexity chips ─────────────────────────────── */
+.comp-chips {
+  display: inline-flex;
+  gap: 4px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.comp-est {
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(251,191,36,.1);
+  color: #fbbf24;
+  border: 1px solid rgba(251,191,36,.2);
+  font-weight: 600;
+}
+
+.comp-actual {
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(96,165,250,.1);
+  color: #60a5fa;
+  border: 1px solid rgba(96,165,250,.2);
+  font-weight: 600;
+}
+
 
 /* ── Mobile responsiveness ────────────────────────── */
 @media (max-width: 640px) {
@@ -500,6 +652,80 @@ a.commit-hash:hover { text-decoration: underline; color: #60a5fa; }
   table { min-width: 0; }
 }
 
+/* ── Unstructured Projects section ───────────────────────────────────────── */
+
+.unstructured-panel {
+  margin: 0 0 0 0;
+  border-top: 1px solid var(--border, #2a2f3a);
+}
+
+.unstructured-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px 10px;
+}
+
+.unstructured-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted, #8892a4);
+}
+
+.unstructured-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 9px;
+  background: var(--border, #2a2f3a);
+  color: var(--muted, #8892a4);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.unstructured-table {
+  width: 100%;
+  font-size: 0.85rem;
+}
+
+.unstructured-date {
+  color: var(--muted, #8892a4);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+/* Signal chips */
+.sig {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  margin-right: 3px;
+}
+.sig-git     { background: #1d2d1d; color: #5aad5a; border: 1px solid #2d4a2d; }
+.sig-readme  { background: #1d2535; color: #5a8ec4; border: 1px solid #2a3d55; }
+.sig-pkg     { background: #2c2010; color: #c49a40; border: 1px solid #4a3a18; }
+.sig-none    { color: var(--muted, #8892a4); }
+
+/* Freshness badges */
+.freshness-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.fresh-active { background: #1a2e1a; color: #4caf50; border: 1px solid #2d4a2d; }
+.fresh-idle   { background: #2c2510; color: #ffa726; border: 1px solid #4a3d18; }
+.fresh-stale  { background: #2a1a1a; color: #888; border: 1px solid #3d2a2a; }
+
   </style>
   <style>
     /* static mode: hide server-dependent controls */
@@ -509,7 +735,7 @@ a.commit-hash:hover { text-decoration: underline; color: #60a5fa; }
 <body>
   <header class="top">
     <div>
-      <h1>Project Tracker</h1>
+      <h1>Meridian</h1>
       <div class="meta" id="meta"></div>
     </div>
 
@@ -533,6 +759,11 @@ a.commit-hash:hover { text-decoration: underline; color: #60a5fa; }
     </div>
   </header>
 
+  <nav class="tab-bar">
+    <button class="tab active" id="tab-projects">Projects</button>
+    <button class="tab" id="tab-ideas">Ideas <span id="idea-count" class="tab-count" style="display:none"></span></button>
+  </nav>
+
   <div id="dashboard" class="dashboard"></div>
 
   <main>
@@ -554,12 +785,16 @@ a.commit-hash:hover { text-decoration: underline; color: #60a5fa; }
     </div>
   </main>
 
+  <div id="ideas-panel" class="ideas-panel" style="display:none">
+    <div id="ideas-content" class="ideas-content">Loading ideas…</div>
+  </div>
+
   <script>
     /* ── Static data shim ──────────────────────────────────
        Intercepts /api/* fetch calls and returns the snapshot
        baked in at build time. app.js is loaded unchanged.
     ─────────────────────────────────────────────────────── */
-    window.STATIC_DATA = {"root":"C:\\Users\\Hola","scanned_at":"2026-02-22T18:55:10.761Z","projects":[{"id":"project-tracker","folder":"C:\\Users\\Hola\\project-tracker","status":"in progress","metrics":{"done":34,"left":4,"progress_percent":89},"current_task":"Phase 7: Product Identity & PM Insights — rename, ideas visibility, complexity tracking","title":"Project Tracker","description":"A lightweight local web dashboard for tracking personal development projects — built to replace spreadsheets and sticky notes with a single live view of progress, phases, and git activity.","missing_files":[],"epics":[{"title":"PHASE 1 — Core Engine","tasks":[{"status":"done","text":"Express server with static file serving"},{"status":"done","text":"Project directory scanning (top-level dirs under PROJECTS_ROOT)"},{"status":"done","text":"BACKLOG.md parser — task checkboxes → auto-computed progress metrics"},{"status":"done","text":"README.md parser — extract title and description"},{"status":"done","text":"Git log integration — recent commits via execFile (no shell dependency)"},{"status":"done","text":"Consistent metrics: no hardcoded numbers, live from file"}]},{"title":"PHASE 2 — UI & Design","tasks":[{"status":"done","text":"Filterable project list (search + status filter)"},{"status":"done","text":"Expandable epic/phase breakdown per project"},{"status":"done","text":"Progress bar with gradient fill"},{"status":"done","text":"Dark theme — slate-900/800/700 + blue-400 palette"},{"status":"done","text":"Consistent 13px typography system"},{"status":"done","text":"Recent commits panel in expanded row"},{"status":"done","text":"Standalone repo — tracked as its own product"},{"status":"done","text":"Auto-refresh (polling every N seconds)"}]},{"title":"PHASE 3 — Product Polish","tasks":[{"status":"done","text":"Deploy as standalone web service — Dockerfile, render.yaml, npm start"},{"status":"done","text":"GitHub integration (open PR / issue counts) — auto-detect git remote, /api/github-stats, live badges in title cell"},{"status":"done","text":"Configure PROJECTS_ROOT via UI"},{"status":"done","text":"Export project summary to markdown"}]},{"title":"PHASE 4 — Dashboard & Integrations","tasks":[{"status":"done","text":"Project health dashboard — summary bar: total projects, tasks done/total, overall % progress bar, by-status breakdown, latest activity strip"},{"status":"done","text":"Clickable commit hashes — link to GitHub commit URL when remote is detected"},{"status":"done","text":"ghCache cleared on full reload — no stale GitHub stats after manual refresh"},{"status":"done","text":"Export MD includes GitHub repo URL per project"}]},{"title":"PHASE 5 — Static Deploy & CI","tasks":[{"status":"done","text":"build-static.js — self-contained output/index.html with fetch shim (GitHub API disabled in static mode)"},{"status":"done","text":"npm run export / export:push — local snapshot workflow"},{"status":"done","text":"vercel.json — outputDirectory: output (Vercel-ready)"},{"status":"done","text":"GitHub Actions workflow — checkout all tracked repos, build snapshot, deploy to GitHub Pages on every push to main"},{"status":"done","text":"Enable GitHub Pages on repo (Settings → Pages → GitHub Actions source)"}]},{"title":"PHASE 6 — Mobile Responsiveness","tasks":[{"status":"done","text":"Audit current layout — identify columns/panels that break below 640px"},{"status":"done","text":"Responsive summary bar — stack metrics vertically on small screens (flex-wrap already present)"},{"status":"done","text":"Responsive project list — full-width rows, hide secondary columns on mobile (Done/Left/Desc hidden via nth-child)"},{"status":"done","text":"Touch-friendly expand/collapse for project rows — larger tap targets (td padding retained)"},{"status":"done","text":"Responsive epic breakdown panel — readable on narrow viewports (flex-direction: column + word-break)"},{"status":"done","text":"Responsive search and filter controls — stack/wrap on mobile (controls flex-wrap in media query)"},{"status":"done","text":"Cross-device QA — Chrome DevTools + real device check; fixed page-level horizontal scroll on portrait mobile"}]},{"title":"PHASE 7 — Product Identity & PM Insights","tasks":[{"status":"pending","text":"Rename dashboard — replace \"Project Tracker\" with a confident, personal product name"},{"status":"pending","text":"Ideas tab — render IDEAS.md inside the dashboard so all ideas are visible at localhost:4319 without opening a file"},{"status":"pending","text":"Idea count badge — pull count of ideas from IDEAS.md and show in header or project row"},{"status":"pending","text":"Complexity column — add initial estimate vs actual time/resource fact-check column per task (PM insight feature)"}]}],"recent_commits":[{"hash":"10f0c44","date":"2026-02-22","subject":"fix: use double quotes in export:push commit message (single quotes break on Windows bash)"},{"hash":"7f1432d","date":"2026-02-22","subject":"chore: update static snapshot (Phase 5+6 complete, Phase 7 tasks)"},{"hash":"85be5c0","date":"2026-02-22","subject":"chore: track SNAPSHOT.md"},{"hash":"0590997","date":"2026-02-22","subject":"chore: rebuild static snapshot with overflow-x fix"},{"hash":"806bdf6","date":"2026-02-22","subject":"chore: sync BACKLOG — mark Phase 5+6 complete, add Phase 7 tasks"},{"hash":"b8bb554","date":"2026-02-22","subject":"fix: prevent page-level horizontal scroll on portrait mobile"},{"hash":"67ede47","date":"2026-02-22","subject":"chore: tick Phase 6 mobile tasks complete in backlog"},{"hash":"dca4a60","date":"2026-02-22","subject":"fix: mobile layout — badge nowrap, hide dense columns, fix task text overflow"},{"hash":"8bc884a","date":"2026-02-22","subject":"chore: tighten CLAUDE.md rules and gitignore settings.local.json"},{"hash":"9c8e191","date":"2026-02-22","subject":"feat: fix project status logic (in progress/complete) and add Phase 6 mobile backlog"},{"hash":"449b350","date":"2026-02-22","subject":"fix: rebuild static snapshot with mobile CSS and table-scroll wrapper"},{"hash":"c314892","date":"2026-02-22","subject":"fix: make project tracker mobile-responsive"},{"hash":"bef5eba","date":"2026-02-22","subject":"ci: GitHub Pages auto-deploy on push to main"},{"hash":"879d059","date":"2026-02-22","subject":"chore: ignore .vercel dir"},{"hash":"129ae21","date":"2026-02-22","subject":"feat: Phase 5 — GitHub Actions static snapshot → GitHub Pages"},{"hash":"647a3fd","date":"2026-02-22","subject":"fix: vercel.json — static site, no framework, no build command"},{"hash":"877c82b","date":"2026-02-22","subject":"fix: remove BOM from package.json"},{"hash":"7c702dc","date":"2026-02-22","subject":"feat: static HTML export for Vercel deploy"},{"hash":"e88c11e","date":"2026-02-22","subject":"chore: update BACKLOG with Phase 4 completed tasks"},{"hash":"d2ae929","date":"2026-02-22","subject":"feat: Phase 5 — dashboard, GitHub integration, tracker improvements"}],"github_repo":{"owner":"katermo0931-eng","repo":"project-tracker"}},{"id":"Interactive-CV","folder":"C:\\Users\\Hola\\Interactive-CV","status":"complete","metrics":{"done":42,"left":0,"progress_percent":100},"current_task":"Phase 6: Mobile Responsiveness — audit and adapt both projects for small screens","title":"Interactive CV","description":"An AI-powered, interactive single-page CV/resume with dark/light theme, scroll animations, and a built-in AI chat assistant that answers visitor questions about your background.","missing_files":[],"epics":[{"title":"PHASE 1 — AI Backend (Core Engine)","tasks":[{"status":"done","text":"Basic Express server"},{"status":"done","text":"Static CV serving"},{"status":"done","text":"POST /api/chat endpoint skeleton"},{"status":"done","text":"Environment variable loading (.env)"},{"status":"done","text":"Embeddings integration (OpenAI)"},{"status":"done","text":"CV content ingestion → vector store"},{"status":"done","text":"Retrieval (top-k chunks)"},{"status":"done","text":"Response grounding with citations"},{"status":"done","text":"Basic rate limiting"},{"status":"done","text":"Migrate to Next.js — API routes as Vercel serverless functions"}]},{"title":"PHASE 2 — Chat UI & CV Features","tasks":[{"status":"done","text":"Chat widget component"},{"status":"done","text":"Streaming responses"},{"status":"done","text":"Error handling in UI"},{"status":"done","text":"Conversation memory (per session)"},{"status":"done","text":"PDF download — real CV file served from /public"},{"status":"done","text":"LinkedIn recommendations — AI system prompt enrichment (8 colleague quotes)"},{"status":"done","text":"LinkedIn recommendations — rotating quote bar (fades every 5s)"},{"status":"done","text":"LinkedIn recommendations — Colleagues Say section with portrait cards & filter chips"},{"status":"done","text":"LinkedIn branded button in header (alongside Download CV)"}]},{"title":"PHASE 3 — Content Layer","tasks":[{"status":"done","text":"LinkedIn profile ingestion — scripts/import-linkedin.js diffs LinkedIn export CSVs against cv-data.json, --update merges"},{"status":"done","text":"PDF CV parsing — scripts/parse-pdf.js extracts text, diffs against cv-data.json, 2 new bullets added"},{"status":"done","text":"JSON structured experience format — CV_DATA extracted to data/cv-data.json"},{"status":"done","text":"Questions section — 5 categories, 15 prompts, scroll-to-chat on click"},{"status":"done","text":"Auto-update content pipeline — scripts/update.js; npm run update / update:push"}]},{"title":"PHASE 4 — Deploy & Infra","tasks":[{"status":"done","text":"Deploy backend (Render / Railway) — superseded; backend runs as Vercel serverless functions (see Phase 1)"},{"status":"done","text":"Deploy frontend (Vercel)"},{"status":"done","text":"Add logging — structured JSON logs in /api/chat (reqId, latency, token usage) via Vercel log drains"},{"status":"done","text":"Add monitoring — /api/health endpoint + Vercel Analytics (@vercel/analytics)"}]},{"title":"PHASE 5 — Meta Tools","tasks":[{"status":"done","text":"GitHub PR/Issues aggregation — /api/github-stats endpoint; eager-loaded badges (open PRs, issues) in project title row; scan.js detects GitHub remote per project"},{"status":"done","text":"Tracker integration improvements — clickable commit hashes link to GitHub; ghCache cleared on full reload; export MD includes GitHub URL"},{"status":"done","text":"Project health dashboard — summary bar: total projects, tasks done/total, overall % progress bar, status breakdown badges, latest activity strip"}]},{"title":"PHASE 6 — Mobile Responsiveness","tasks":[{"status":"done","text":"Audit current layout — identify sections that break below 640px"},{"status":"done","text":"Responsive header — stack Download CV / LinkedIn buttons on small screens"},{"status":"done","text":"Responsive hero section — adjust font sizes and spacing for mobile (p-5 md:p-8 on header card)"},{"status":"done","text":"Responsive experience cards — full-width stack on mobile (single col via viewport fix)"},{"status":"done","text":"Responsive chat widget — full-screen overlay on mobile, sticky input bar (max-w-[85%] bubbles, single col)"},{"status":"done","text":"Responsive \"Colleagues Say\" section — single-column cards on mobile"},{"status":"done","text":"Touch-friendly question prompts — larger tap targets (chips already px-3 py-1.5 rounded-full)"},{"status":"done","text":"Cross-device QA — Chrome DevTools + real device check"},{"status":"done","text":"Discoverability fix — move QuestionsSection above CV grid; bold prompt text; larger chat window"},{"status":"done","text":"AI section redesign — split-view (questions left | chat right), merged into one AISection component, card-style buttons, auto-scroll to latest message"},{"status":"done","text":"Portrait layout fix — main grid lg:grid-cols-2 (was md:) so tablets ≤1023px get single column; overflow-x hidden on body"}]}],"recent_commits":[{"hash":"9350802","date":"2026-02-22","subject":"feat: merge questions + chat into split-view AISection"},{"hash":"9dfcb71","date":"2026-02-22","subject":"fix: prevent portrait layout from 2-col on tablets; stop body overflow"},{"hash":"ca4062e","date":"2026-02-22","subject":"feat: move questions above CV grid for discoverability; QA fixes"},{"hash":"39a0d5d","date":"2026-02-22","subject":"fix: prevent question chips from overflowing viewport on mobile"},{"hash":"262397f","date":"2026-02-22","subject":"fix: mobile layout polish — header padding and chat bubble width"},{"hash":"a8e6d9f","date":"2026-02-22","subject":"fix: add viewport meta tag to fix 2-column layout on mobile"},{"hash":"62d9fea","date":"2026-02-22","subject":"chore: tighten CLAUDE.md rules and gitignore settings.local.json"},{"hash":"aab65f2","date":"2026-02-22","subject":"feat: add Phase 6 Mobile Responsiveness to backlog; add auto-backlog and deploy rules to CLAUDE.md"},{"hash":"7042560","date":"2026-02-22","subject":"fix: allow question chips to wrap on mobile"},{"hash":"c4dfa31","date":"2026-02-22","subject":"chore: remove stale tools/project-tracker copy"},{"hash":"e37aa5b","date":"2026-02-22","subject":"chore: mark Phase 5 complete in BACKLOG"},{"hash":"12af012","date":"2026-02-21","subject":"feat: enhance /api/health monitoring endpoint"},{"hash":"ed03a98","date":"2026-02-21","subject":"feat: add logging and monitoring (Phase 4 complete)"},{"hash":"fdaa2b1","date":"2026-02-21","subject":"Inject pre-written Q&A into AI system prompt"},{"hash":"47c8a23","date":"2026-02-21","subject":"Polish language in pre-written Q&A answers"},{"hash":"21a94a2","date":"2026-02-21","subject":"feat: add auto-update content pipeline (scripts/update.js)"},{"hash":"06f437d","date":"2026-02-21","subject":"Add Languages.csv support to LinkedIn import script"},{"hash":"02a4c4a","date":"2026-02-21","subject":"Rewrite all 15 answers in clean declarative prose matching CV tone"},{"hash":"194ffab","date":"2026-02-21","subject":"Clean all pre-written answers: remove quoted words, standardise British English"},{"hash":"13c90dc","date":"2026-02-21","subject":"Add pre-written answers for all 15 question chips; render markdown in chat"}],"github_repo":{"owner":"katermo0931-eng","repo":"Interactive-CV"}}]};
+    window.STATIC_DATA = {"root":"C:\\AIDEV","scanned_at":"2026-03-26T12:02:51.300Z","projects":[{"id":"AccessMap","folder":"C:\\AIDEV\\AccessMap","status":"needs work","metrics":{"done":0,"left":0,"progress_percent":0},"current_task":"","title":"AccessMap","description":"**Automated user access reviews for companies that currently live in spreadsheets.**","missing_files":[".claude/SNAPSHOT.md (or content/SNAPSHOT.md)"],"epics":[],"recent_commits":[],"github_repo":null},{"id":"ai-cost-audit","folder":"C:\\AIDEV\\ai-cost-audit","status":"needs work","metrics":null,"current_task":"","title":"ai-cost-audit","description":"Estimate what your AI product will cost across 9 LLM providers. Free calculator + AI architecture cost report.","missing_files":[".claude/BACKLOG.md (or content/BACKLOG.md)",".claude/SNAPSHOT.md (or content/SNAPSHOT.md)"],"epics":[],"recent_commits":[],"github_repo":null},{"id":"GREEN","folder":"C:\\Users\\Hola\\OneDrive\\Документы\\Katya_personal\\XXXXXXX\\GREEN","status":"needs work","metrics":null,"current_task":"","title":"GREEN","description":"*9½ Weeks, or the Story of a Slow Murder*","missing_files":[".claude/BACKLOG.md (or content/BACKLOG.md)",".claude/SNAPSHOT.md (or content/SNAPSHOT.md)"],"epics":[],"recent_commits":[],"github_repo":null},{"id":"Talkfolio","folder":"C:\\AIDEV\\Talkfolio","status":"in progress","metrics":{"done":12,"left":14,"progress_percent":46},"current_task":"Phase 2: Core Screens","title":"Talkfolio","description":"Multi-tenant SaaS — each user gets their own AI-powered interactive CV.","missing_files":[],"epics":[{"title":"PHASE 1 — Auth + Data Model ✅","tasks":[{"status":"done","text":"Scaffold Next.js app (App Router + Tailwind + TypeScript)","estimate":null,"actual":null},{"status":"done","text":"Install @clerk/nextjs","estimate":null,"actual":null},{"status":"done","text":"Add clerkMiddleware in middleware.ts","estimate":null,"actual":null},{"status":"done","text":"Wrap app with ClerkProvider, add auth header (SignIn/SignUp/UserButton)","estimate":null,"actual":null},{"status":"done","text":"GitHub repo created (private)","estimate":null,"actual":null},{"status":"done","text":"Create Supabase project (hnmqjmmydsdakxscxjtx — url + anon key + service role key obtained)","estimate":null,"actual":null},{"status":"done","text":"Run supabase/schema.sql in Supabase SQL editor (creates all 8 tables, RLS, indexes)","estimate":null,"actual":null},{"status":"done","text":"Add Supabase env vars to .env.local","estimate":null,"actual":null},{"status":"done","text":"Add all env vars to Vercel dashboard (Clerk + Supabase)","estimate":null,"actual":null},{"status":"done","text":"Wire Clerk auth into app — create profile row on first sign-up (webhook)","estimate":null,"actual":null},{"status":"done","text":"First user can sign up and see blank profile page","estimate":null,"actual":null}]},{"title":"PHASE 2 — Core Screens","tasks":[{"status":"done","text":"Screen 1: Landing page (public)","estimate":null,"actual":null},{"status":"pending","text":"Screen 2: Sign up / Login (Clerk)","estimate":null,"actual":null},{"status":"pending","text":"Screen 3: Import CV","estimate":null,"actual":null},{"status":"pending","text":"Screen 4: Editor — profile fields + CV sections (experience, education, skills, projects)","estimate":null,"actual":null},{"status":"pending","text":"Screen 5: Publish / Share — generate link, set mode (public / token / password)","estimate":null,"actual":null},{"status":"pending","text":"Screen 6: Public page — interactive Q&A view (/cv/[username] or /cv/[token])","estimate":null,"actual":null}]},{"title":"PHASE 3 — Q&A Engine","tasks":[{"status":"pending","text":"AI answers grounded in: structured cv_entries + uploaded CV text + user evidence links (no other sources)","estimate":null,"actual":null},{"status":"pending","text":"Interview question template library (user can pick + customize)","estimate":null,"actual":null},{"status":"pending","text":"Log every Q&A to qa_logs (question, answer, timestamp, profile_id)","estimate":null,"actual":null}]},{"title":"PHASE 3B — Extended Import (after first 25 users)","tasks":[{"status":"pending","text":"LinkedIn data export import — user downloads ZIP from LinkedIn settings (Positions.csv, Education.csv, Skills.csv), uploads to Talkfolio; parse CSVs → `cv_entries` (add step-by-step guide UI for the LinkedIn export friction)","estimate":null,"actual":null},{"status":"pending","text":"Notion OAuth import — connect Notion workspace, pick a page, parse blocks → `cv_entries` (differentiator for PM audience; Notion API is public + well-documented)","estimate":null,"actual":null}]},{"title":"PHASE 4 — Payments + Analytics","tasks":[{"status":"pending","text":"Stripe: Free (branded, limited Q&A/day) vs Pro (unbranded, unlimited, analytics)","estimate":null,"actual":null},{"status":"pending","text":"Stripe webhook updates subscriptions table on payment/cancellation","estimate":null,"actual":null},{"status":"pending","text":"Analytics (Pro only): total views per profile, top 10 questions asked","estimate":null,"actual":null},{"status":"pending","text":"ATS-friendly PDF export from structured cv_entries","estimate":null,"actual":null}]}],"recent_commits":[],"github_repo":null},{"id":"Interactive-CV","folder":"C:\\AIDEV\\Interactive-CV","status":"complete","metrics":{"done":42,"left":0,"progress_percent":100},"current_task":"Phase 6: Mobile Responsiveness — audit and adapt both projects for small screens","title":"Interactive CV — Ekaterina Cherkasova","description":"AI-powered interactive CV for a Senior Product Manager. Live: https://interactive-cv-project.vercel.app","missing_files":[],"epics":[{"title":"PHASE 1 — AI Backend (Core Engine)","tasks":[{"status":"done","text":"Basic Express server","estimate":null,"actual":null},{"status":"done","text":"Static CV serving","estimate":null,"actual":null},{"status":"done","text":"POST /api/chat endpoint skeleton","estimate":null,"actual":null},{"status":"done","text":"Environment variable loading (.env)","estimate":null,"actual":null},{"status":"done","text":"Embeddings integration (OpenAI)","estimate":null,"actual":null},{"status":"done","text":"CV content ingestion → vector store","estimate":null,"actual":null},{"status":"done","text":"Retrieval (top-k chunks)","estimate":null,"actual":null},{"status":"done","text":"Response grounding with citations","estimate":null,"actual":null},{"status":"done","text":"Basic rate limiting","estimate":null,"actual":null},{"status":"done","text":"Migrate to Next.js — API routes as Vercel serverless functions","estimate":null,"actual":null}]},{"title":"PHASE 2 — Chat UI & CV Features","tasks":[{"status":"done","text":"Chat widget component","estimate":null,"actual":null},{"status":"done","text":"Streaming responses","estimate":null,"actual":null},{"status":"done","text":"Error handling in UI","estimate":null,"actual":null},{"status":"done","text":"Conversation memory (per session)","estimate":null,"actual":null},{"status":"done","text":"PDF download — real CV file served from /public","estimate":null,"actual":null},{"status":"done","text":"LinkedIn recommendations — AI system prompt enrichment (8 colleague quotes)","estimate":null,"actual":null},{"status":"done","text":"LinkedIn recommendations — rotating quote bar (fades every 5s)","estimate":null,"actual":null},{"status":"done","text":"LinkedIn recommendations — Colleagues Say section with portrait cards & filter chips","estimate":null,"actual":null},{"status":"done","text":"LinkedIn branded button in header (alongside Download CV)","estimate":null,"actual":null}]},{"title":"PHASE 3 — Content Layer","tasks":[{"status":"done","text":"LinkedIn profile ingestion — scripts/import-linkedin.js diffs LinkedIn export CSVs against cv-data.json, --update merges","estimate":null,"actual":null},{"status":"done","text":"PDF CV parsing — scripts/parse-pdf.js extracts text, diffs against cv-data.json, 2 new bullets added","estimate":null,"actual":null},{"status":"done","text":"JSON structured experience format — CV_DATA extracted to data/cv-data.json","estimate":null,"actual":null},{"status":"done","text":"Questions section — 5 categories, 15 prompts, scroll-to-chat on click","estimate":null,"actual":null},{"status":"done","text":"Auto-update content pipeline — scripts/update.js; npm run update / update:push","estimate":null,"actual":null}]},{"title":"PHASE 4 — Deploy & Infra","tasks":[{"status":"done","text":"Deploy backend (Render / Railway) — superseded; backend runs as Vercel serverless functions (see Phase 1)","estimate":null,"actual":null},{"status":"done","text":"Deploy frontend (Vercel)","estimate":null,"actual":null},{"status":"done","text":"Add logging — structured JSON logs in /api/chat (reqId, latency, token usage) via Vercel log drains","estimate":null,"actual":null},{"status":"done","text":"Add monitoring — /api/health endpoint + Vercel Analytics (@vercel/analytics)","estimate":null,"actual":null}]},{"title":"PHASE 5 — Meta Tools","tasks":[{"status":"done","text":"GitHub PR/Issues aggregation — /api/github-stats endpoint; eager-loaded badges (open PRs, issues) in project title row; scan.js detects GitHub remote per project","estimate":null,"actual":null},{"status":"done","text":"Tracker integration improvements — clickable commit hashes link to GitHub; ghCache cleared on full reload; export MD includes GitHub URL","estimate":null,"actual":null},{"status":"done","text":"Project health dashboard — summary bar: total projects, tasks done/total, overall % progress bar, status breakdown badges, latest activity strip","estimate":null,"actual":null}]},{"title":"PHASE 6 — Mobile Responsiveness","tasks":[{"status":"done","text":"Audit current layout — identify sections that break below 640px","estimate":null,"actual":null},{"status":"done","text":"Responsive header — stack Download CV / LinkedIn buttons on small screens","estimate":null,"actual":null},{"status":"done","text":"Responsive hero section — adjust font sizes and spacing for mobile (p-5 md:p-8 on header card)","estimate":null,"actual":null},{"status":"done","text":"Responsive experience cards — full-width stack on mobile (single col via viewport fix)","estimate":null,"actual":null},{"status":"done","text":"Responsive chat widget — full-screen overlay on mobile, sticky input bar (max-w-[85%] bubbles, single col)","estimate":null,"actual":null},{"status":"done","text":"Responsive \"Colleagues Say\" section — single-column cards on mobile","estimate":null,"actual":null},{"status":"done","text":"Touch-friendly question prompts — larger tap targets (chips already px-3 py-1.5 rounded-full)","estimate":null,"actual":null},{"status":"done","text":"Cross-device QA — Chrome DevTools + real device check","estimate":null,"actual":null},{"status":"done","text":"Discoverability fix — move QuestionsSection above CV grid; bold prompt text; larger chat window","estimate":null,"actual":null},{"status":"done","text":"AI section redesign — split-view (questions left | chat right), merged into one AISection component, card-style buttons, auto-scroll to latest message","estimate":null,"actual":null},{"status":"done","text":"Portrait layout fix — main grid lg:grid-cols-2 (was md:) so tablets ≤1023px get single column; overflow-x hidden on body","estimate":null,"actual":null}]}],"recent_commits":[],"github_repo":null},{"id":"project-tracker","folder":"C:\\AIDEV\\project-tracker","status":"complete","metrics":{"done":38,"left":0,"progress_percent":100},"current_task":"Phase 7: Product Identity & PM Insights — rename, ideas visibility, complexity tracking","title":"Meridian","description":"Cross-project dev dashboard — live progress from BACKLOG.md checkboxes, GitHub PR/issue badges, git history per project, health summary, and export to MD. No manual updates.","missing_files":[],"epics":[{"title":"PHASE 1 — Core Engine","tasks":[{"status":"done","text":"Express server with static file serving","estimate":null,"actual":null},{"status":"done","text":"Project directory scanning (top-level dirs under PROJECTS_ROOT)","estimate":null,"actual":null},{"status":"done","text":"BACKLOG.md parser — task checkboxes → auto-computed progress metrics","estimate":null,"actual":null},{"status":"done","text":"README.md parser — extract title and description","estimate":null,"actual":null},{"status":"done","text":"Git log integration — recent commits via execFile (no shell dependency)","estimate":null,"actual":null},{"status":"done","text":"Consistent metrics: no hardcoded numbers, live from file","estimate":null,"actual":null}]},{"title":"PHASE 2 — UI & Design","tasks":[{"status":"done","text":"Filterable project list (search + status filter)","estimate":null,"actual":null},{"status":"done","text":"Expandable epic/phase breakdown per project","estimate":null,"actual":null},{"status":"done","text":"Progress bar with gradient fill","estimate":null,"actual":null},{"status":"done","text":"Dark theme — slate-900/800/700 + blue-400 palette","estimate":null,"actual":null},{"status":"done","text":"Consistent 13px typography system","estimate":null,"actual":null},{"status":"done","text":"Recent commits panel in expanded row","estimate":null,"actual":null},{"status":"done","text":"Standalone repo — tracked as its own product","estimate":null,"actual":null},{"status":"done","text":"Auto-refresh (polling every N seconds)","estimate":null,"actual":null}]},{"title":"PHASE 3 — Product Polish","tasks":[{"status":"done","text":"Deploy as standalone web service — Dockerfile, render.yaml, npm start","estimate":null,"actual":null},{"status":"done","text":"GitHub integration (open PR / issue counts) — auto-detect git remote, /api/github-stats, live badges in title cell","estimate":null,"actual":null},{"status":"done","text":"Configure PROJECTS_ROOT via UI","estimate":null,"actual":null},{"status":"done","text":"Export project summary to markdown","estimate":null,"actual":null}]},{"title":"PHASE 4 — Dashboard & Integrations","tasks":[{"status":"done","text":"Project health dashboard — summary bar: total projects, tasks done/total, overall % progress bar, by-status breakdown, latest activity strip","estimate":null,"actual":null},{"status":"done","text":"Clickable commit hashes — link to GitHub commit URL when remote is detected","estimate":null,"actual":null},{"status":"done","text":"ghCache cleared on full reload — no stale GitHub stats after manual refresh","estimate":null,"actual":null},{"status":"done","text":"Export MD includes GitHub repo URL per project","estimate":null,"actual":null}]},{"title":"PHASE 5 — Static Deploy & CI","tasks":[{"status":"done","text":"build-static.js — self-contained output/index.html with fetch shim (GitHub API disabled in static mode)","estimate":null,"actual":null},{"status":"done","text":"npm run export / export:push — local snapshot workflow","estimate":null,"actual":null},{"status":"done","text":"vercel.json — outputDirectory: output (Vercel — retired in favour of GitHub Pages)","estimate":null,"actual":null},{"status":"done","text":"GitHub Actions workflow — checkout all tracked repos, build snapshot, deploy to GitHub Pages on every push to main","estimate":null,"actual":null},{"status":"done","text":"Enable GitHub Pages on repo (Settings → Pages → GitHub Actions source)","estimate":null,"actual":null}]},{"title":"PHASE 6 — Mobile Responsiveness","tasks":[{"status":"done","text":"Audit current layout — identify columns/panels that break below 640px","estimate":null,"actual":null},{"status":"done","text":"Responsive summary bar — stack metrics vertically on small screens (flex-wrap already present)","estimate":null,"actual":null},{"status":"done","text":"Responsive project list — full-width rows, hide secondary columns on mobile (Done/Left/Desc hidden via nth-child)","estimate":null,"actual":null},{"status":"done","text":"Touch-friendly expand/collapse for project rows — larger tap targets (td padding retained)","estimate":null,"actual":null},{"status":"done","text":"Responsive epic breakdown panel — readable on narrow viewports (flex-direction: column + word-break)","estimate":null,"actual":null},{"status":"done","text":"Responsive search and filter controls — stack/wrap on mobile (controls flex-wrap in media query)","estimate":null,"actual":null},{"status":"done","text":"Cross-device QA — Chrome DevTools + real device check; fixed page-level horizontal scroll on portrait mobile","estimate":null,"actual":null}]},{"title":"PHASE 7 — Product Identity & PM Insights","tasks":[{"status":"done","text":"Rename dashboard — \"Meridian\" (title, h1, package.json, README, server log, User-Agent)","estimate":"30m actual:20m","actual":null},{"status":"done","text":"Ideas tab — render IDEAS.md inside the dashboard so all ideas are visible at localhost:4319 without opening a file","estimate":"2h actual:1.5h","actual":null},{"status":"done","text":"Idea count badge — pull count of ideas from IDEAS.md and show in header or project row","estimate":"30m actual:20m","actual":null},{"status":"done","text":"Complexity column — add initial estimate vs actual time/resource fact-check column per task (PM insight feature)","estimate":"3h actual:2h","actual":null}]}],"recent_commits":[],"github_repo":null}]};
     (function () {
       var _fetch = window.fetch;
       window.fetch = function (url) {
@@ -572,6 +807,11 @@ a.commit-hash:hover { text-decoration: underline; color: #60a5fa; }
         if (s.indexOf("/api/github-stats") !== -1) {
           return Promise.resolve({
             json: function () { return Promise.resolve({ error: "static mode" }); }
+          });
+        }
+        if (s.indexOf("/api/ideas") !== -1) {
+          return Promise.resolve({
+            json: function () { return Promise.resolve({ error: "static mode", content: null, idea_count: 0 }); }
           });
         }
         return _fetch.apply(this, arguments);
@@ -589,6 +829,161 @@ a.commit-hash:hover { text-decoration: underline; color: #60a5fa; }
   var elCountdown = document.getElementById("countdown");
   var elRootInput = document.getElementById("root-input");
   var elRootApply = document.getElementById("root-apply");
+  var elTabProjects = document.getElementById("tab-projects");
+  var elTabIdeas = document.getElementById("tab-ideas");
+  var elMain = document.querySelector("main");
+  var elDashboard = document.getElementById("dashboard");
+  var elIdeasPanel = document.getElementById("ideas-panel");
+  var elIdeaCount = document.getElementById("idea-count");
+
+  // ── Tab switching ──────────────────────────────────
+
+  var unstructuredVisible = false;
+
+  function switchTab(tab) {
+    elTabProjects.classList.toggle("active", tab === "projects");
+    elTabIdeas.classList.toggle("active", tab === "ideas");
+    elMain.style.display = tab === "projects" ? "" : "none";
+    if (elDashboard) elDashboard.style.display = tab === "projects" ? "" : "none";
+    if (elUnstructuredPanel) elUnstructuredPanel.style.display = (tab === "projects" && unstructuredVisible) ? "" : "none";
+    elIdeasPanel.style.display = tab === "ideas" ? "" : "none";
+    if (tab === "ideas") renderIdeasPanel();
+  }
+
+  elTabProjects.addEventListener("click", function () { switchTab("projects"); });
+  elTabIdeas.addEventListener("click", function () { switchTab("ideas"); });
+
+  // ── Ideas ──────────────────────────────────────────
+
+  var ideasData = null;
+
+  // ── Unstructured projects ──────────────────────────────────────────────────
+
+  var elUnstructuredPanel = document.getElementById("unstructured-panel");
+  var elUnstructuredRows  = document.getElementById("unstructured-rows");
+  var elUnstructuredCount = document.getElementById("unstructured-count");
+
+  var FRESHNESS_LABEL = { active: "active", idle: "idle", stale: "stale" };
+  var FRESHNESS_CLASS = { active: "fresh-active", idle: "fresh-idle", stale: "fresh-stale" };
+
+  function relativeDate(ms) {
+    var ageDays = (Date.now() - ms) / (1000 * 60 * 60 * 24);
+    if (ageDays < 1)   return "today";
+    if (ageDays < 2)   return "yesterday";
+    if (ageDays < 30)  return Math.floor(ageDays) + "d ago";
+    if (ageDays < 365) return Math.floor(ageDays / 30) + "mo ago";
+    return Math.floor(ageDays / 365) + "y ago";
+  }
+
+  function renderUnstructured(projects) {
+    if (!projects || !projects.length) {
+      unstructuredVisible = false;
+      if (elUnstructuredPanel) elUnstructuredPanel.style.display = "none";
+      return;
+    }
+    unstructuredVisible = true;
+    if (elUnstructuredCount) elUnstructuredCount.textContent = projects.length;
+    if (elUnstructuredPanel) elUnstructuredPanel.style.display = "";
+
+    elUnstructuredRows.innerHTML = projects.map(function (p) {
+      var signals = [];
+      if (p.hasGit)         signals.push("<span class=\"sig sig-git\">git</span>");
+      if (p.hasReadme)      signals.push("<span class=\"sig sig-readme\">readme</span>");
+      if (p.hasPackageJson) signals.push("<span class=\"sig sig-pkg\">pkg</span>");
+      var sigHtml = signals.join(" ") || "<span class=\"sig-none\">—</span>";
+      var freshCls = FRESHNESS_CLASS[p.freshnessState] || "fresh-stale";
+      var freshLabel = FRESHNESS_LABEL[p.freshnessState] || p.freshnessState;
+      return "<tr>" +
+        "<td class=\"proj\"><div class=\"title\">" + esc(p.name) + "</div>" +
+        "<div class=\"folder\">" + esc(p.path) + "</div></td>" +
+        "<td>" + sigHtml + "</td>" +
+        "<td class=\"unstructured-date\">" + esc(relativeDate(p.lastModifiedAt)) + "</td>" +
+        "<td><span class=\"freshness-badge " + freshCls + "\">" + freshLabel + "</span></td>" +
+        "</tr>";
+    }).join("");
+  }
+
+  function fetchUnstructured() {
+    var url = "/api/unstructured" + (customRoot ? "?root=" + encodeURIComponent(customRoot) : "");
+    fetch(url)
+      .then(function (r) { return r.json(); })
+      .then(function (j) { renderUnstructured(j.projects || []); })
+      .catch(function () {
+        if (elUnstructuredPanel) elUnstructuredPanel.style.display = "none";
+      });
+  }
+
+  function fetchIdeas() {
+    fetch("/api/ideas")
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        ideasData = data;
+        if (data.idea_count > 0 && elIdeaCount) {
+          elIdeaCount.textContent = data.idea_count;
+          elIdeaCount.style.display = "";
+        }
+      })
+      .catch(function () {});
+  }
+
+  function inlineMd(raw) {
+    return raw
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+      .replace(/`([^`]+)`/g, "<code class=\"ideas-code\">$1</code>");
+  }
+
+  function renderIdeasMd(md) {
+    if (!md) return "<p class=\"ideas-empty\">No ideas file found.</p>";
+    var lines = md.split(/\r?\n/);
+    var out = [];
+    lines.forEach(function (line) {
+      if (/^# /.test(line)) {
+        // skip top-level title (just "Ideas Inbox")
+      } else if (/^## /.test(line)) {
+        out.push("<h2 class=\"ideas-h2\">" + inlineMd(line.replace(/^## /, "")) + "</h2>");
+      } else if (/^### /.test(line)) {
+        out.push("<h3 class=\"ideas-h3\">" + inlineMd(line.replace(/^### /, "")) + "</h3>");
+      } else if (/^-{3,}$/.test(line.trim())) {
+        out.push("<hr class=\"ideas-hr\"/>");
+      } else if (/\*\*Status:\*\*/.test(line)) {
+        var m = line.match(/\*\*Status:\*\*\s*(.+)/);
+        if (m) {
+          var val = m[1].trim();
+          var cls = /^(done|addressed|complete|retired)/i.test(val) ? "idea-done"
+                  : /^idea$/i.test(val) ? "idea-active"
+                  : "idea-other";
+          out.push("<p class=\"ideas-status\"><span class=\"ideas-status-label\">Status</span><span class=\"idea-badge " + cls + "\">" + inlineMd(val) + "</span></p>");
+        }
+      } else if (line.trim() === "" || /^_Add new ideas/.test(line)) {
+        // skip
+      } else {
+        out.push("<p class=\"ideas-p\">" + inlineMd(line) + "</p>");
+      }
+    });
+    return out.join("\n");
+  }
+
+  function renderIdeasPanel() {
+    var el = document.getElementById("ideas-content");
+    if (!el) return;
+    if (!ideasData) {
+      el.innerHTML = "<p class=\"ideas-empty\">Ideas not available.</p>";
+      return;
+    }
+    if (ideasData.error && !ideasData.content) {
+      el.innerHTML = "<p class=\"ideas-empty\">Ideas file not available in this environment.</p>";
+      return;
+    }
+    el.innerHTML = renderIdeasMd(ideasData.content);
+  }
+
+  // Extra per-project action links: keyed by folder basename
+  var PROJECT_LINKS = {
+    "Interactive-CV": [
+      { label: "in", url: "https://www.linkedin.com/in/ekacherkasova", cls: "li-badge" }
+    ]
+  };
 
   var STORAGE_KEY = "tracker_root";
   var customRoot = localStorage.getItem(STORAGE_KEY) || "";
@@ -728,8 +1123,11 @@ a.commit-hash:hover { text-decoration: underline; color: #60a5fa; }
       var tasksId = "etasks-" + rowIdx + "-" + ei;
       var tasks = ep.tasks.map(function (t) {
         var st = t.status || "pending";
+        var estHtml   = t.estimate ? "<span class=\"comp-est\">"    + esc(t.estimate) + "</span>" : "";
+        var actHtml   = t.actual   ? "<span class=\"comp-actual\">→ " + esc(t.actual)   + "</span>" : "";
+        var chipsHtml = (estHtml || actHtml) ? "<span class=\"comp-chips\">" + estHtml + actHtml + "</span>" : "";
         return "<div class=\"task " + st + "\">" +
-          (TASK_ICON[st] || "○") + " " + esc(t.text) +
+          (TASK_ICON[st] || "○") + " " + esc(t.text) + chipsHtml +
         "</div>";
       }).join("");
       return "<div class=\"epic status-" + cls + "\">" +
@@ -826,6 +1224,11 @@ a.commit-hash:hover { text-decoration: underline; color: #60a5fa; }
       var commitsHtml = renderCommits(p.recent_commits, p.github_repo);
       var rowId = "erow-" + i;
 
+      var folderKey = (p.folder || "").replace(/\\/g, "/").split("/").filter(Boolean).pop() || "";
+      var extraLinks = (PROJECT_LINKS[folderKey] || []).map(function (lk) {
+        return "<a class=\"gh-badge " + esc(lk.cls) + "\" href=\"" + esc(lk.url) + "\" target=\"_blank\" rel=\"noopener\" onclick=\"event.stopPropagation()\">" + esc(lk.label) + "</a>";
+      }).join("");
+
       return (
         "<tr class=\"proj-row\" data-epic-target=\"" + rowId + "\">" +
           "<td class=\"proj\">" +
@@ -833,6 +1236,7 @@ a.commit-hash:hover { text-decoration: underline; color: #60a5fa; }
               ((epicHtml || commitsHtml) ? "<span class=\"expand-icon\">▶</span> " : "") +
               esc(p.title) +
               (p.github_repo ? " <span class=\"gh-badges\" id=\"gh-" + esc(p.github_repo.owner) + "-" + esc(p.github_repo.repo) + "\">…</span>" : "") +
+              (extraLinks ? " " + extraLinks : "") +
             "</div>" +
             "<div class=\"folder\">" + esc(p.folder) + "</div>" +
           "</td>" +
@@ -898,6 +1302,7 @@ a.commit-hash:hover { text-decoration: underline; color: #60a5fa; }
           " | Projects: " + all.length +
           " | Last scan: " + scanned.toLocaleString();
         render();
+        fetchUnstructured();
         startCountdown();
       })
       .catch(function (e) {
@@ -991,6 +1396,7 @@ a.commit-hash:hover { text-decoration: underline; color: #60a5fa; }
   });
 
   load();
+  fetchIdeas();
 })();
 
   </script>
