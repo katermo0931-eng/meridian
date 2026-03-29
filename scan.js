@@ -96,8 +96,10 @@ async function scanOneDir(dir) {
   if (!isProject) return null;
 
   const missing = [];
-  if (!hasBacklog) missing.push(".claude/BACKLOG.md (or content/BACKLOG.md)");
-  if (!hasSnapshot) missing.push(".claude/SNAPSHOT.md (or content/SNAPSHOT.md)");
+  if (!hasBacklog && !hasSnapshot) {
+    missing.push(".claude/BACKLOG.md (or content/BACKLOG.md)");
+    missing.push(".claude/SNAPSHOT.md (or content/SNAPSHOT.md)");
+  }
   if (!hasReadme) missing.push("README.md");
 
   let metrics = null;

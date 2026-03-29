@@ -73,7 +73,7 @@ jobs:
         # build-static.js uses only Node built-ins — no npm install needed
         # GITHUB_WORKSPACE root has all repos as siblings
         # EXTRA_PROJECTS lists dirs that may lack BACKLOG/README (force-included)
-        run: PROJECTS_ROOT=$GITHUB_WORKSPACE EXTRA_PROJECTS=$GITHUB_WORKSPACE/ai-cost-audit node scripts/build-static.js
+        run: PROJECTS_ROOT=$GITHUB_WORKSPACE node scripts/build-static.js
         working-directory: project-tracker
 
       - name: Upload Pages artifact
