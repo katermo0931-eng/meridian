@@ -29,7 +29,6 @@ jobs:
         with:
           repository: katermo0931-eng/Interactive-CV
           path: Interactive-CV
-          token: ${{ secrets.GH_PAT }}
           fetch-depth: 0
 
       - name: Checkout Talkfolio
@@ -61,7 +60,6 @@ jobs:
         with:
           repository: katermo0931-eng/ai-cost-audit
           path: ai-cost-audit
-          token: ${{ secrets.GH_PAT }}
           fetch-depth: 0
 
       - name: Setup Node
